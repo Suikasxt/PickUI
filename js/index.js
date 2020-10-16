@@ -5,8 +5,12 @@
 	var now = "?";
 	var list = new Array();
 	var timeSpace = 250
-	var numberL = 1, numberR = 2000;
+	var numberL = 1000, numberR = 1200;
 	var lastLength = 0;
+	var maxFontSize = 300;
+	var circleNum = 1200;
+	var textW = 1000;
+	var textH = 400;
 	var colors = ['#FFF', '#effafa', '#faeff6', '#faf9ef', '#f1faef'];
 	
 	function addList(x){
@@ -50,11 +54,11 @@
 
 	// Init Canvas
 	function initStages() {
-		offsetX = (window.innerWidth-600)/2;
-		offsetY = (window.innerHeight-300)/2;
+		offsetX = (window.innerWidth-textW)/2;
+		offsetY = (window.innerHeight-textH)/2;
 		textStage = new createjs.Stage("text");
-		textStage.canvas.width = 600;
-		textStage.canvas.height = 200;
+		textStage.canvas.width = textW;
+		textStage.canvas.height = textH;
 
 		stage = new createjs.Stage("stage");
 		stage.canvas.width = window.innerWidth;
@@ -63,7 +67,7 @@
 
 	function initForm() {
 		form = document.getElementById('form');
-		form.style.top = offsetY+200+'px';
+		form.style.top = offsetY+textH+'px';
 		form.style.left = offsetX+'px';
 		input = document.getElementById('inputText');
 	}
@@ -71,12 +75,12 @@
 	function initText() {
 		text = new createjs.Text("t", "80px 'Source Sans Pro'", "#eee");
 		text.textAlign = 'center';
-		text.x = 300;
+		//text.x = textW/2;
 	}
 
 	function initCircles() {
 		circles = [];
-		for(var i=0; i<600; i++) {
+		for(var i=0; i<circleNum; i++) {
 			var circle = new createjs.Shape();
 			var r = 7;
 			var x = window.innerWidth*Math.random();
@@ -190,23 +194,23 @@
 
 	function createText(t) {
 		var fontSize = 860/(t.length);
-		if (fontSize > 160) fontSize = 160;
+		if (fontSize > maxFontSize) fontSize = maxFontSize;
 		text.text = t;
 		text.font = "900 "+fontSize+"px 'Microsoft Yahei, Source Sans Pro'";
 		text.textAlign = 'center';
-		text.x = 300;
-		text.y = (172-fontSize)/2;
+		text.x = textW/2;
+		text.y = (textH-fontSize)/2;
 		textStage.addChild(text);
 		textStage.update();
 
 		var ctx = document.getElementById('text').getContext('2d');
-		var pix = ctx.getImageData(0,0,600,200).data;
+		var pix = ctx.getImageData(0,0,textW,textH).data;
 		textPixels = [];
 		var s = 4;
 		for (var i = pix.length; i >= 0; i -= s) {
 			if (pix[i] != 0) {
-				var x = (i / s) % 600;
-				var y = Math.floor(Math.floor(i/600)/s);
+				var x = (i / s) % textW;
+				var y = Math.floor(Math.floor(i/textW)/s);
 
 				if((x && x%8 == 0) && (y && y%8 == 0)) textPixels.push({x: x, y: y});
 			}
