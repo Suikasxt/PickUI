@@ -13,6 +13,7 @@
 	var textH = 400;
 	var colors = ['#FFF', '#effafa', '#faeff6', '#faf9ef', '#f1faef'];
 	
+	//添加已经抽出的号码，防止重复
 	function addList(x){
 		if (x<numberL || x>numberR){
 			return;
@@ -26,6 +27,8 @@
 			console.log('Delete: ' + list[list.length-1]);
 		}
 	}
+	
+	//监听空格回车
 	document.onkeydown = function (event) {
 		var e = event || window.event || arguments.callee.caller.arguments[0];
 		if (e && (e.keyCode == 13 || e.keyCode == 32)) {
@@ -233,11 +236,14 @@
 			if (i==n) return x;
 		}
 	}
+	
+	//主循环
 	function reform(){
 		if (flag){
+			//如果处于循环滚动状态，则生成一个新的数，并展示
 			now = getRandNumber();
 			createText(now);
-			console.log(now);
+			console.log(now);//调试输出
 		}
 		var time = setTimeout("reform()", timeSpace);
 	}
