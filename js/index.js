@@ -37,7 +37,7 @@
 				numberNow = Number(now);
 				var L = numberNow, R = numberNow;
 				if (e.keyCode == 13){
-					L = numberNow - numberNow%10 + 1;
+					L = numberNow - numberNow%10;
 					R = L + 9;
 				}
 				for (var i = L; i <= R; i++){
